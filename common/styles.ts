@@ -20,7 +20,7 @@ export default createGlobalStyle`
 
   html, body {
     margin: 0px;
-    background-color: #ff9cd7;
+    background-color: #CEBBF8;
     font-family: 'cerebri-sans', --apple-system, Roboto, 'Helvetica Neue', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;

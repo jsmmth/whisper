@@ -20,16 +20,16 @@ export const StyledLayout = styled.div`
   position: relative;
 `;
 
-export const YellowBlob = styled.img`
+export const PrimaryBlob = styled.img`
   position: absolute;
   top: -30vw;
   right: -50vw;
   width: 150vw;
   height: 150vh;
-  animation: yellowMove 20s ease-in-out infinite;
+  animation: primaryMove 20s ease-in-out infinite;
   filter: blur(100px);
 
-  @keyframes yellowMove {
+  @keyframes primaryMove {
     40% {
       transform: translate(40vw, 0vh);
     }
@@ -39,16 +39,16 @@ export const YellowBlob = styled.img`
   }
 `;
 
-export const PinkBlob = styled.img`
+export const SecondaryBlob = styled.img`
   position: absolute;
   top: 0vw;
   left: 0vw;
   width: 80vw;
   height: 90vh;
-  animation: pinkMove 10s ease-in-out infinite;
+  animation: secondaryMove 10s ease-in-out infinite;
   filter: blur(100px);
 
-  @keyframes pinkMove {
+  @keyframes secondaryMove {
     40% {
       transform: translate(40vw, 0vh);
     }
