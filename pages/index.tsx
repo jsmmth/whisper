@@ -9,7 +9,6 @@ const Index: NextPage = () => {
         <title>Joseph Smith</title>
       </Head>
       <Header />
-      Hello there
     </>
   );
 };
