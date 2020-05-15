@@ -10,7 +10,10 @@ const Header: React.FC = () => {
       </HeaderText>
       <HeaderText top={10}>
         <img src="/images/live-icon.svg" />
-        <a href="https://youtu.be/ON_0tqGTNyE">Watch me code</a> this site live
+        <a href="https://www.youtube.com/watch?v=rRozaI_7SG4">
+          Watch me code
+        </a>{" "}
+        this site live
       </HeaderText>
     </StyledHeader>
   );
