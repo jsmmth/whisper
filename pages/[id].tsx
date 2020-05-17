@@ -45,8 +45,7 @@ const ViewWhisper: React.FC = () => {
   };
 
   useEffect(() => {
-    // id !== code &&
-    if (whisper != null && whisper.expires == null) {
+    if (id !== code && whisper != null && whisper.expires == null) {
       updateExpires();
     }
   }, [whisper, code]);
