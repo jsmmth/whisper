@@ -1,5 +1,12 @@
-import React, { FormEvent, useState, ChangeEvent } from "react";
+import React, {
+  FormEvent,
+  useState,
+  ChangeEvent,
+  useEffect,
+  useRef,
+} from "react";
 import Button from "components/Button";
+import moment from "moment";
 import {
   WhisperForm,
   InputContainer,
@@ -9,15 +16,22 @@ import {
   StyledSuccessBody,
 } from "./styles";
 
-type WhisperProps = {
-  userCode: string | null;
+type Whisper = {
+  whisper: string | null;
+  expires: string | null;
 };
 
-const Whisper: React.FC<WhisperProps> = ({ userCode }) => {
+type WhisperProps = {
+  userCode?: string | null;
+  value?: Whisper | null;
+};
+
+const Whisper: React.FC<WhisperProps> = ({ userCode = null, value = null }) => {
   const [whisper, setWhisper] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
   const isDisabled = userCode == null;
+  const inputContainerRef = useRef<HTMLDivElement>(null);
 
   const onSubmit = async (e: FormEvent) => {
     try {
@@ -42,17 +56,45 @@ const Whisper: React.FC<WhisperProps> = ({ userCode }) => {
     setWhisper(e.target.value);
   };
 
+  useEffect(() => {
+    let listener: any = null;
+    if (value != null && value.expires != null) {
+      setWhisper(value.whisper ?? "");
+      listener = setInterval(() => {
+        let diff = moment(value.expires).diff(moment(), "seconds");
+        const percent = Math.round((diff / 60) * 100) / 100;
+        if (percent <= 0) {
+          if (inputContainerRef.current) {
+            inputContainerRef.current.innerHTML = "";
+          }
+          clearInterval(listener);
+        }
+
+        if (inputContainerRef.current) {
+          inputContainerRef.current.setAttribute(
+            "style",
+            `opacity: ${percent}`
+          );
+        }
+      }, 1000);
+    }
+    return () => {
+      if (listener) clearInterval(listener);
+    };
+  }, [value]);
+
   return (
     <WhisperForm {...{ onSubmit }}>
-      <InputContainer>
+      <InputContainer ref={inputContainerRef}>
         <StyledInput
           value={whisper}
           onChange={onChange}
+          disabled={isDisabled}
           placeholder="Write a whisper..."
         />
       </InputContainer>
       <WhisperFooter>
-        {isComplete ? (
+        {isComplete && (
           <>
             <StyledSuccessTitle>
               Published! - https://whisper.li/{userCode}
@@ -61,8 +103,10 @@ const Whisper: React.FC<WhisperProps> = ({ userCode }) => {
               After the first view the 60s countdown will start.
             </StyledSuccessBody>
           </>
-        ) : (
-          <Button type="submit" disabled={isDisabled || isLoading}>
+        )}
+
+        {!isComplete && !isDisabled && (
+          <Button type="submit" disabled={isLoading}>
             Publish
           </Button>
         )}

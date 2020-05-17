@@ -29,6 +29,7 @@ export const InputContainer = styled.div`
   flex: 1;
   display: flex;
   align-items: center;
+  transition: opacity 0.2s ease-in-out;
 `;
 
 export const StyledInput = styled.textarea`

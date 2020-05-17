@@ -13,7 +13,7 @@ const Index: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Joseph Smith</title>
+        <title>Whisper - make a whisper</title>
       </Head>
       <Header />
       <Whisper userCode={code} />
