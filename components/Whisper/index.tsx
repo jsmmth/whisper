@@ -6,13 +6,13 @@ import {
   StyledInput,
   WhisperFooter,
 } from "./styles";
-import useLocalStorage from "common/hooks/useLocalStoage";
-import { USER_LOCAL_STORAGE_KEY } from "common/constants";
 
-const Whisper: React.FC = () => {
-  const [code] = useLocalStorage(USER_LOCAL_STORAGE_KEY);
+type WhisperProps = {
+  userCode: string | null;
+};
 
-  console.log(code);
+const Whisper: React.FC<WhisperProps> = ({ userCode }) => {
+  const isDisabled = userCode == null;
 
   return (
     <WhisperContainer>
@@ -20,7 +20,7 @@ const Whisper: React.FC = () => {
         <StyledInput placeholder="hello" />
       </InputContainer>
       <WhisperFooter>
-        <Button disabled={code == null}>Publish</Button>
+        <Button disabled={isDisabled}>Publish</Button>
       </WhisperFooter>
     </WhisperContainer>
   );

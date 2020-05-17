@@ -27,7 +27,7 @@ export const PrimaryBlob = styled.img`
   width: 150vw;
   height: 150vh;
   animation: primaryMove 20s ease-in-out infinite;
-  filter: blur(100px);
+  filter: blur(150px);
 
   @keyframes primaryMove {
     40% {
@@ -46,7 +46,7 @@ export const SecondaryBlob = styled.img`
   width: 80vw;
   height: 90vh;
   animation: secondaryMove 10s ease-in-out infinite;
-  filter: blur(100px);
+  filter: blur(150px);
 
   @keyframes secondaryMove {
     40% {

@@ -8,7 +8,7 @@ import { USER_LOCAL_STORAGE_KEY } from "common/constants";
 
 const Index: NextPage = () => {
   const userCode = randomstring.generate(7);
-  useLocalStorage(USER_LOCAL_STORAGE_KEY, userCode);
+  const [code] = useLocalStorage(USER_LOCAL_STORAGE_KEY, userCode);
 
   return (
     <>
@@ -16,7 +16,7 @@ const Index: NextPage = () => {
         <title>Joseph Smith</title>
       </Head>
       <Header />
-      <Whisper />
+      <Whisper userCode={code} />
     </>
   );
 };
