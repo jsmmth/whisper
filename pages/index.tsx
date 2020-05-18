@@ -3,12 +3,12 @@ import { NextPage } from "next";
 import Header from "components/Header";
 import Whisper from "components/Whisper";
 import randomstring from "randomstring";
-import useLocalStorage from "common/hooks/useLocalStoage";
-import { USER_LOCAL_STORAGE_KEY } from "common/constants";
+import Intro from "components/Intro";
+import { useState } from "react";
 
 const Index: NextPage = () => {
   const userCode = randomstring.generate(7);
-  const [code] = useLocalStorage(USER_LOCAL_STORAGE_KEY, userCode);
+  const [introVisible, setIntroVisible] = useState(true);
 
   return (
     <>
@@ -16,7 +16,11 @@ const Index: NextPage = () => {
         <title>Whisper - make a whisper</title>
       </Head>
       <Header />
-      <Whisper userCode={code} />
+      {introVisible ? (
+        <Intro {...{ setIntroVisible }} />
+      ) : (
+        <Whisper {...{ userCode }} />
+      )}
     </>
   );
 };

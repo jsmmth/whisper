@@ -5,6 +5,7 @@ import React, {
   useEffect,
   useRef,
 } from "react";
+import { useRouter } from "next/router";
 import Button from "components/Button";
 import moment from "moment";
 import {
@@ -27,6 +28,7 @@ type WhisperProps = {
 };
 
 const Whisper: React.FC<WhisperProps> = ({ userCode = null, value = null }) => {
+  const router = useRouter();
   const [whisper, setWhisper] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
@@ -68,6 +70,7 @@ const Whisper: React.FC<WhisperProps> = ({ userCode = null, value = null }) => {
             inputContainerRef.current.innerHTML = "";
           }
           clearInterval(listener);
+          router.push("/");
         }
 
         if (inputContainerRef.current) {
@@ -87,27 +90,26 @@ const Whisper: React.FC<WhisperProps> = ({ userCode = null, value = null }) => {
     <WhisperForm {...{ onSubmit }}>
       <InputContainer ref={inputContainerRef}>
         <StyledInput
+          autoFocus={!isDisabled}
           value={whisper}
           onChange={onChange}
           disabled={isDisabled}
-          placeholder="Write a whisper..."
+          placeholder="Don't tell anyone but..."
         />
       </InputContainer>
       <WhisperFooter>
         {isComplete && (
           <>
             <StyledSuccessTitle>
-              Published! - https://whisper.li/{userCode}
+              👻 This Whipser will disappear forever in 0:60
             </StyledSuccessTitle>
-            <StyledSuccessBody>
-              After the first view the 60s countdown will start.
-            </StyledSuccessBody>
+            <StyledSuccessBody>https://whisper.li/{userCode}</StyledSuccessBody>
           </>
         )}
 
         {!isComplete && !isDisabled && (
           <Button type="submit" disabled={isLoading}>
-            Publish
+            {isLoading ? "Posting..." : "Post with Whisper"}
           </Button>
         )}
       </WhisperFooter>

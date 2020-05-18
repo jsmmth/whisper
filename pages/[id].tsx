@@ -4,8 +4,6 @@ import { useRouter } from "next/dist/client/router";
 import Head from "next/head";
 import Header from "components/Header";
 import Whisper from "components/Whisper";
-import { USER_LOCAL_STORAGE_KEY } from "common/constants";
-import useLocalStoage from "common/hooks/useLocalStoage";
 
 const fetcher = (url: string) =>
   fetch(url)
@@ -24,7 +22,6 @@ const ViewWhisper: React.FC = () => {
     whisper: "",
     expires: null,
   });
-  const [code] = useLocalStoage(USER_LOCAL_STORAGE_KEY);
   const { id } = router.query;
   const { data } = useSWR(`/api/whisper/${id}`, fetcher);
 
@@ -45,15 +42,10 @@ const ViewWhisper: React.FC = () => {
   };
 
   useEffect(() => {
-    if (
-      id !== code &&
-      code != null &&
-      whisper != null &&
-      whisper.expires == null
-    ) {
+    if (whisper != null && whisper.expires == null) {
       updateExpires();
     }
-  }, [whisper, code]);
+  }, [whisper]);
 
   useEffect(() => {
     if (data && data.whisper) {
@@ -67,7 +59,7 @@ const ViewWhisper: React.FC = () => {
         <title>Whisper - see a whisper</title>
       </Head>
       <Header />
-      {whisper != null && <Whisper value={whisper} />}
+      {whisper.whisper != null && <Whisper value={whisper} />}
     </>
   );
 };
