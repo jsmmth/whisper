@@ -58,8 +58,8 @@ const Whisper: React.FC<WhisperProps> = ({ userCode = null, value = null }) => {
 
   useEffect(() => {
     let listener: any = null;
-    if (value != null && value.expires != null) {
-      setWhisper(value.whisper ?? "");
+    setWhisper(value != null ? value.whisper ?? "" : "");
+    if (value && value.expires != null) {
       listener = setInterval(() => {
         let diff = moment(value.expires).diff(moment(), "seconds");
         const percent = Math.round((diff / 60) * 100) / 100;
