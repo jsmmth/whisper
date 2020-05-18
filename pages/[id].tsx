@@ -35,7 +35,7 @@ const ViewWhisper: React.FC = () => {
         },
       });
       const json = await data.json();
-      setWhisper(json);
+      setWhisper({ ...json, id });
     } catch (err) {
       console.error(err);
     }

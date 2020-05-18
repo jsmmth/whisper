@@ -8,6 +8,7 @@ import React, {
 import { useRouter } from "next/router";
 import Button from "components/Button";
 import moment from "moment";
+import Countdown from "react-countdown-now";
 import {
   WhisperForm,
   InputContainer,
@@ -20,6 +21,7 @@ import {
 type Whisper = {
   whisper: string | null;
   expires: string | null;
+  id?: string;
 };
 
 type WhisperProps = {
@@ -29,6 +31,7 @@ type WhisperProps = {
 
 const Whisper: React.FC<WhisperProps> = ({ userCode = null, value = null }) => {
   const router = useRouter();
+  const listener = useRef<number | null>(null);
   const [whisper, setWhisper] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
@@ -58,31 +61,32 @@ const Whisper: React.FC<WhisperProps> = ({ userCode = null, value = null }) => {
     setWhisper(e.target.value);
   };
 
+  const updatePercent = (expires: string) => {
+    let diff = moment(expires).diff(moment(), "seconds");
+    const percent = Math.round((diff / 60) * 100) / 100;
+    if (percent <= 0) {
+      if (listener.current) clearInterval(listener.current);
+      setWhisper("You're too late!");
+      setTimeout(() => {
+        router.push("/");
+      }, 3000);
+    } else {
+      if (inputContainerRef.current) {
+        inputContainerRef.current.setAttribute("style", `opacity: ${percent}`);
+      }
+    }
+  };
+
   useEffect(() => {
-    let listener: any = null;
     setWhisper(value != null ? value.whisper ?? "" : "");
     if (value && value.expires != null) {
-      listener = setInterval(() => {
-        let diff = moment(value.expires).diff(moment(), "seconds");
-        const percent = Math.round((diff / 60) * 100) / 100;
-        if (percent <= 0) {
-          if (inputContainerRef.current) {
-            inputContainerRef.current.innerHTML = "";
-          }
-          clearInterval(listener);
-          router.push("/");
-        }
-
-        if (inputContainerRef.current) {
-          inputContainerRef.current.setAttribute(
-            "style",
-            `opacity: ${percent}`
-          );
-        }
+      updatePercent(value.expires);
+      listener.current = setInterval(() => {
+        updatePercent(value.expires ?? "");
       }, 1000);
     }
     return () => {
-      if (listener) clearInterval(listener);
+      if (listener.current) clearInterval(listener.current);
     };
   }, [value]);
 
@@ -98,12 +102,27 @@ const Whisper: React.FC<WhisperProps> = ({ userCode = null, value = null }) => {
         />
       </InputContainer>
       <WhisperFooter>
-        {isComplete && (
+        {isComplete && !isDisabled && (
           <>
             <StyledSuccessTitle>
               👻 This Whipser will disappear forever in 0:60
             </StyledSuccessTitle>
             <StyledSuccessBody>https://whisper.li/{userCode}</StyledSuccessBody>
+          </>
+        )}
+
+        {isDisabled && value?.expires && (
+          <>
+            <StyledSuccessTitle>
+              👻 This Whipser will disappear forever in{" "}
+              <Countdown
+                date={moment(value.expires).toDate()}
+                renderer={({ seconds }) => {
+                  return <span>0:{seconds}</span>;
+                }}
+              />
+            </StyledSuccessTitle>
+            <StyledSuccessBody>https://whisper.li/{value.id}</StyledSuccessBody>
           </>
         )}
 

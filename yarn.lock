@@ -3486,6 +3486,11 @@ locate-path@^5.0.0:
   dependencies:
     p-locate "^4.1.0"
 
+lodash.isequal@^4.5.0:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/lodash.isequal/-/lodash.isequal-4.5.0.tgz#415c4478f2bcc30120c22ce10ed3226f7d3e18e0"
+  integrity sha1-QVxEePK8wwEgwizhDtMib30+GOA=
+
 lodash.isplainobject@^4.0.6:
   version "4.0.6"
   resolved "https://registry.yarnpkg.com/lodash.isplainobject/-/lodash.isplainobject-4.0.6.tgz#7c526a52d89b45c45cc690b88163be0497f550cb"
@@ -4561,7 +4566,7 @@ prop-types-exact@1.2.0:
     object.assign "^4.1.0"
     reflect.ownkeys "^0.2.0"
 
-prop-types@15.7.2, prop-types@^15.6.0, prop-types@^15.6.2:
+prop-types@15.7.2, prop-types@^15.6.0, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -4671,6 +4676,14 @@ randomstring@^1.1.5:
   integrity sha1-bfBij3XL1ZMpMNn+OrTpVqGFGMM=
   dependencies:
     array-uniq "1.0.2"
+
+react-countdown-now@^2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/react-countdown-now/-/react-countdown-now-2.1.2.tgz#b93d153fbb7a8d359beb32ecbf1de29d15f026c7"
+  integrity sha512-BgRnsxV2vnvyJAefDBigTX+ngX6eGd2xl6DIFdZPIZkbx0mzxlMEeoEQG01JyeHDjqaXFUpIonIbx1yYyaMwzg==
+  dependencies:
+    lodash.isequal "^4.5.0"
+    prop-types "^15.7.2"
 
 react-dom@16.13.1:
   version "16.13.1"
