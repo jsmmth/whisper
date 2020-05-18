@@ -34,6 +34,7 @@ export const InputContainer = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
+  justify-content: center;
   transition: opacity 0.2s ease-in-out;
 `;
 
@@ -47,6 +48,7 @@ export const StyledInput = styled(TextareaAutosize)`
   resize: none;
   opacity: 0;
   width: 100%;
+  max-width: 600px;
   height: 60px;
   animation: fadeIn 6s ease-in-out forwards;
 
