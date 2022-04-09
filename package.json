@@ -7,7 +7,7 @@
     "build": "next build"
   },
   "dependencies": {
-    "moment": "^2.25.3",
+    "moment": "^2.29.2",
     "next": "9.4.0",
     "randomstring": "^1.1.5",
     "react": "16.13.1",
